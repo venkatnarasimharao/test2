@@ -1,0 +1,25 @@
+{
+  "name": "myexample_server",
+  "version": "1.0.0",
+  "description": "just for practice",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon bootstrap.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "venkat"
+  },
+  "author": "venkat",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "hapi": "^16.6.2",
+    "knex": "^0.20.4",
+    "mysql": "^2.17.1",
+    "nodemon": "^2.0.2",
+    "objection": "^2.0.6"
+  }
+}
