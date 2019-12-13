@@ -17,9 +17,10 @@ app.config = Config;
 const server = new Server();
 
 const obj = {
-    port : JSON.parse(`${app.config.server.port}`),
-    host : `${app.config.server.host}`,
-    database : `${app.config.database.db}`
+    port: JSON.parse(`${app.config.server.port}`),
+    host: `${app.config.server.host}`,
+    database: `${app.config.database.db}`,
+    db_host: `${app.config.database.host}`
 }
 server.connection({
     port: app.config.server.port,
@@ -27,12 +28,12 @@ server.connection({
 
 server.route(endpoints);
 
-server.start((err)=>{
-    if(err){
+server.start((err) => {
+    if (err) {
         console.log(err)
         throw err
     }
-    console.log("server started on \n",obj);
+    console.log("server started on \n", obj);
 })
 
 module.exports = server;

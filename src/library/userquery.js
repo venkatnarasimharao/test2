@@ -12,6 +12,20 @@ let simpleselect = (tablemap,columnlist,whereCond) =>{
         })
     });
 }
+
+let insertOrUpdate= (knex, tableName, data)=> {
+    const firstData = data[0] ? data[0] : data;
+    return knex.raw(
+      `${knex(tableName)
+        .insert(data)
+        .toQuery()} ON DUPLICATE KEY UPDATE ${Object.getOwnPropertyNames(
+        firstData
+      )
+        .map(field => `${field}=VALUES(${field})`)
+        .join(",")}`
+    );
+  }
 module.exports={
-    simpleselect
+    simpleselect,
+    insertOrUpdate
 }

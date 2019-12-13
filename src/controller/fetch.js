@@ -1,10 +1,11 @@
 const userquery = require("../library/userquery");
 const Trf_level = require('../model/Trf_management_level');
+const Calender = require('../model/Calender');
 
 exports.fetchDetails = {
     handler(req, res) {
         let columnlist = ['*'];
-        userquery.simpleselect(Trf_level, columnlist,null).then(resu => {
+        userquery.simpleselect(Calender, columnlist,null).then(resu => {
             let response = {
                 result: resu,
                 success: true,
