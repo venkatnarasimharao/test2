@@ -3,15 +3,17 @@ const { Model } = require('objection');
 
 class Calender extends Model {
     static get tableName() {
-        return '' +'calendar';
+        return '' + 'calendar';
     }
     static get idColumn() {
-        return 'dt';
+        return 'id';
     }
     static get jsonSchema() {
         return {
             type: 'object',
             properties: {
+                id: { type: 'integer' },
+                name: { type: 'string' },
                 dt: { type: 'date' }
             }
         };

@@ -1,7 +1,10 @@
 'use strict';
 const { Server } = require('hapi');
 const Config = require('./config/config');
-const endpoints = require("./routes")
+const endpoints = require("./routes");
+
+// to enable cors ( intraction between two ports )
+const corsHeaders = require('hapi-cors-headers');
 const app = {};
 
 // this line is used to implement mapping between knex and model
@@ -25,7 +28,7 @@ const obj = {
 server.connection({
     port: app.config.server.port,
 });
-
+server.ext('onPreResponse', corsHeaders)
 server.route(endpoints);
 
 server.start((err) => {
