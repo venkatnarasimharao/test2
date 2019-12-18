@@ -1,5 +1,4 @@
 const userquery = require("../library/userquery");
-const Trf_level = require('../model/Trf_management_level');
 const Calender = require('../model/Calender');
 
 exports.fetchDetails = {
@@ -26,14 +25,12 @@ exports.fetchDetails = {
 exports.postData = {
     handler: async (req, res) => {
         console.log(req.payload)
-        userquery.insertTable(Calender, req.payload).then(resu => {
-            console.log("aaaaaaaa")
+        userquery.insertTableWithPromise(Calender, req.payload).then(resu => {
             let response = {
                 result: resu,
                 success: true,
                 message: 'Data inserted Successfully'
             }
-            console.log(resu)
             return res(response);
         }).catch(err => {
             let response = {
@@ -41,6 +38,26 @@ exports.postData = {
                 message: 'unable to insert data'
             }
             console.log(err, "err")
+            return res(response);
+        })
+    }
+}
+
+exports.deleteCalendarData ={
+    handler: async(req,res)=>{
+        console.log(req.payload,"delete")
+        userquery.deleteTableData(Calender,`id`,req.payload.id).then(resu=>{
+            let response = {
+                result: resu,
+                success: true,
+                message: 'Data Deleted Successfully'
+            }
+            return res(response);
+        }).catch(err =>{
+            let response = {
+                error: err,
+                message: 'Unable to Delete'
+            }
             return res(response);
         })
     }

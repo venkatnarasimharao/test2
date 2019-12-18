@@ -26,13 +26,36 @@ let insertOrUpdate = (knex, tableName, data) => {
     );
 }
 
-let insertTable = (Model, data) => {
-    const que = Model.query().insert(data).toString();
-    return Model.raw(que)
+let insertTableWithPromise = (Model, data) => {
+    return new Promise((resolve, reject) => {
+        let que = Model.query().insert(data);
+        que.then(result => {
+            resolve(result);
+        }).catch(error => {
+            reject(error);
+        })
+    });
 }
 
+let insertTable = (Model, data) => {
+    const que = Model.query().insert(data).toString();
+    return Model.raw(que);
+}
+
+let deleteTableData = (Model,CondIdColmn,CondId) => {
+    return new Promise((resolve, reject) => {
+        let que = Model.query().delete().where(CondIdColmn, CondId);
+        que.then(result => {
+            resolve(result);
+        }).catch(error => {
+            reject(error);
+        })
+    })
+}
 module.exports = {
     simpleselect,
     insertOrUpdate,
-    insertTable
+    insertTableWithPromise,
+    insertTable,
+    deleteTableData
 }
