@@ -1,6 +1,6 @@
 const fetch = require("../src/controller/fetch");
 const fetchDetails = require('./controller/fetch');
-
+const userlogin = require('./controller/login')
 const endpoints = [
     {
         method: 'GET',
@@ -16,6 +16,11 @@ const endpoints = [
         method: 'POST',
         path: '/deleteCalendar',
         config: fetch.deleteCalendarData
+    },
+    {
+        method: 'POST',
+        path: '/userlogin',
+        config: userlogin.userLogin
     }
 
     // ...fetchDetails
