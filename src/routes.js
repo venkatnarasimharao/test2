@@ -1,6 +1,8 @@
 const fetch = require("../src/controller/fetch");
 const fetchDetails = require('./controller/fetch');
-const userlogin = require('./controller/login')
+const userlogin = require('./controller/login');
+const Insertion = require('./controller/insertion');
+
 const endpoints = [
     {
         method: 'GET',
@@ -21,6 +23,11 @@ const endpoints = [
         method: 'POST',
         path: '/userlogin',
         config: userlogin.userLogin
+    },
+    {
+        method:'POST',
+        path:'/bulkInsertion',
+        config: Insertion.bulkInsertion
     }
 
     // ...fetchDetails
