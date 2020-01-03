@@ -14,7 +14,7 @@ const Knexx = require('../src/config/Knex');
 const { Model } = require('objection');
 //  now map both.
 Model.knex(Knexx);
-
+require('./crons/CronJob')
 
 app.config = Config;
 const server = new Server();
