@@ -5,12 +5,8 @@ exports.fileUpload=  {
         // PREFIX = (request.auth.credentials.companyShortCode).toLowerCase();
         let documentdata = request.payload;
         const updateparam = {
-            tri_id: documentdata.tri_id,
-            tri_name: documentdata.tri_name,
             document_name: documentdata.document_name,
             document_path: documentdata.documentPath,
-            created_on: documentdata.created_on,
-            updated_on: documentdata.updated_on
         };
         let uploadPath = "";
         let ext;
@@ -24,7 +20,7 @@ exports.fileUpload=  {
         } else if (ext == "octet-stream") {
             ext = "pdf";
         }
-        uploadPath = `${config.TRI_UPLOAD_CONTENT}${request.auth.credentials.companyShortCode}${updateparam.tri_id}${timerDis}${timerDis ? ('-' + updateparam.document_name) : ''}.${ext}`;
+        uploadPath = `${config.UPLOAD_CONTENT}${updateparam.document_name}${timerDis}${timerDis ? ('-' + updateparam.document_name) : ''}.${ext}`;
         // remove header
         let base64Image = documentdata.documentPath.split(';base64,').pop();
         fs.writeFileSync(uploadPath, base64Image, {

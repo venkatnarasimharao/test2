@@ -10,5 +10,5 @@ module.exports = {
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
     },
-    TRI_UPLOAD_CONTENT: './training_management/tri_documents/',
+    UPLOAD_CONTENT: './training_management/tri_documents/',
 };
