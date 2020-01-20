@@ -91,6 +91,83 @@ const insertOrUpdateTransaction = async (request, Model, data, trx) => {
     return request.knex.raw(que).transacting(trx)
 }
 
+const commonSelectQuery = (request, Model, ModelAlias, allData) => {
+    let query
+    return new Promise((resolve, reject) => {
+        try {
+            // 1 model
+            query = Model.query(request.knex)
+            // 2 alias
+            if (ModelAlias) query = query.alias(ModelAlias)
+            // 3 select list
+            query = query.select(raw(allData.selectList))
+            // 4 joins
+            if (allData.joins) {
+                for (const row of allData.joins) {
+                    switch (row.type) {
+                        case 'left':
+                            query = query.leftJoin(
+                                `${row.tableName} as ${row.alias}`,
+                                raw(row.onConditions)
+                            )
+                            break
+                        case 'right':
+                            query = query.rightJoin(
+                                `${row.tableName} as ${row.alias}`,
+                                raw(row.onConditions)
+                            )
+                            break
+                        case 'inner':
+                            query = query.innerJoin(
+                                `${row.tableName} as ${row.alias}`,
+                                raw(row.onConditions)
+                            )
+                            break
+                        case 'full':
+                            query = query.fullOuterJoin(
+                                `${row.tableName} as ${row.alias}`,
+                                raw(row.onConditions)
+                            )
+                            break
+                        case 'relation':
+                            query = query.joinRelation(`${row.tableName} as ${row.alias}`)
+                            break
+                        case 'inner-relation':
+                            query = query.innerJoinRelation(`${row.tableName}`)
+                            break
+                        case 'left-relation':
+                            query = query.leftJoinRelation(`${row.tableName}`)
+                            break
+                        case 'right-relation':
+                            query = query.rightJoinRelation(`${row.tableName}`)
+                            break
+                        default:
+                            break
+                    }
+                }
+            }
+            // 5 where
+            if (allData.where) query = query.whereRaw(allData.where)
+            // 6 having
+            if (allData.having) query = query.havingRaw(allData.having)
+            // 7 group by
+            if (allData.groupBy) query = query.groupByRaw(allData.groupBy)
+            if (allData.groupby) query = query.groupByRaw(allData.groupby)
+            // 8 order by
+            if (allData.orderBy) query = query.orderByRaw(allData.orderBy)
+            if (allData.orderby) query = query.orderByRaw(allData.orderby)
+            // 9 limit
+            if (allData.limit) query = query.limit(allData.limit)
+            if (allData.skip) query = query.offset(allData.skip)
+
+            console.log(query.toString(), 'FINAL Select Query ***')
+            resolve(query)
+        } catch (error) {
+            console.log(error, '$$error in common function')
+            reject(error)
+        }
+    })
+}
 // let insertOrUpdatePromise = (Model, data) => {
 //     return new Promise((resolve, reject) => {
 //         const firstData = data[0] ? data[0] : data
@@ -118,5 +195,6 @@ module.exports = {
     // insertOrUpdatePromise,
     insertOrUpdateTransaction,
     insertTable,
-    deleteTableData
+    deleteTableData,
+    commonSelectQuery
 }
