@@ -5,7 +5,7 @@ exports.userLogin = {
     handler: async (req, res) => {
         console.log(req.payload, "login")
         let whereCond = `userId = '${req.payload.username}' && password ='${req.payload.password}'`
-        await userquery.simpleselect(loginModel, `userId`, whereCond).then(data => {
+        await userquery.simpleselect(loginModel, `*`, whereCond).then(data => {
             console.log(data,"aaaa")
             let response = {
                 result: data,

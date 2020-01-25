@@ -14,7 +14,8 @@ class Login extends Model {
             properties: {
                 id: { type: 'integer' },
                 userId: { type: 'string' },
-                password: { type: 'string' }
+                password: { type: 'string' },
+                role: { type: 'string' }
             }
         };
     }
