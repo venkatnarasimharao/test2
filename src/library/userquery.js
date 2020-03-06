@@ -1,3 +1,5 @@
+// like - which gives a name which is similar to like that before and after
+// SELECT * FROM `modules` WHERE `module_name` LIKE '%Ass%'
 
 let simpleselect = (tablemap, columnlist, whereCond) => {
     return new Promise((resolve, reject) => {
