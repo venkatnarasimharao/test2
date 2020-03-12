@@ -188,6 +188,45 @@ const commonSelectQuery = (request, Model, ModelAlias, allData) => {
 //     });
 // }
 
+const selectquerywithwhere = (
+    request,
+    tableMap,
+    modalAlias,
+    columnList,
+    joinRelation,
+    columnWhere,
+    columnGroupBy,
+    columnOrderBy
+) => {
+    let query = ''
+    return new Promise((resolve, reject) => {
+        query = tableMap.query(request.knex).select(columnList)
+        if (modalAlias) {
+            query = query.alias(modalAlias)
+        }
+        if (joinRelation) {
+            query = query.leftJoinRelation(joinRelation)
+        }
+        if (columnWhere) {
+            query = query.where(columnWhere)
+        }
+        if (columnGroupBy) {
+            query = query.groupBy(columnGroupBy)
+        }
+        if (columnOrderBy) {
+            query = query.orderByRaw(columnOrderBy)
+        }
+        console.log(query.toString())
+        query
+            .then(result => {
+                resolve(result)
+            })
+            .catch(error => {
+                reject(error)
+            })
+    })
+}
+
 module.exports = {
     simpleselect,
     insertOrUpdate,
@@ -198,5 +237,6 @@ module.exports = {
     insertOrUpdateTransaction,
     insertTable,
     deleteTableData,
-    commonSelectQuery
+    commonSelectQuery,
+    selectquerywithwhere
 }
