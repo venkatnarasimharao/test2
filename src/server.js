@@ -29,6 +29,8 @@ server.connection({
     port: app.config.server.port,
 });
 server.ext('onPreResponse', corsHeaders)
+
+// router connection should be add after connection
 server.route(endpoints);
 
 server.start((err) => {
