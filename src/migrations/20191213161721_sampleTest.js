@@ -4,6 +4,11 @@ exports.up = function(knex) {
         return knex.schema
             .createTableIfNotExists("calendar", function (table) {
                 table.date("dt").unique();
+                // relation view or foregin keys
+                // table.foreign('emp_id')
+                //     .references('employees.emp_id')
+                //     .onUpdate('NO ACTION')
+                //     .onDelete('NO ACTION');
             })
     } catch (err) {
         exports.down();
