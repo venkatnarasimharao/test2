@@ -34,6 +34,11 @@ const endpoints = [
         method:'POST',
         path:'/uploaddoc',
         config:fileupload.fileUpload
+    },
+    {
+        method: 'GET',
+        path: '/geteagerquery',
+        config: userlogin.eagerQuery
     }
 
     // ...fetchDetails

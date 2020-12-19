@@ -1,5 +1,8 @@
 const userquery = require("../library/userquery");
 const loginModel = require("../model/Login");
+// test
+const stateModel = require("../model/State");
+const countryModel = require("../model/Country");
 const process = require("../config/config");
 // for creating token
 const jwt = require("jsonwebtoken");
@@ -45,4 +48,42 @@ exports.userLogin = {
         return res(response);
       });
   },
+};
+
+exports.eagerQuery = {
+  handler: async (request, reply) => {
+    let response = {};
+    // console.log(request, "reqqqqqqqqqqqqqqqq");
+    try {
+      const relationResp = countryModel
+      .query()
+      .select()
+      .eager('stateMapping(selectState)',{
+        selectState : builder => {
+          builder.select(
+            'state'
+          )
+        }
+      });
+      // also can be written as 
+      // .eager('stateMapping')
+    await relationResp
+      .then(async resp => {
+        response = {
+          data : resp,
+          success: true,
+          message: "success data",
+        };
+        console.log(resp)
+      })
+    } catch (error) {
+      response = {
+        error : error,
+        success: false,
+        message: "failed data",
+      }
+      console.log(error, "error");
+    }
+    return await reply(response);
+  }
 };
